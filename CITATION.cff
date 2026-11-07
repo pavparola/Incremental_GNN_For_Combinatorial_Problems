@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+title: Incremental Graph Neural Networks for Dynamic Channel Assignment in HAN and NAN Deployments
+authors:
+  - family-names: Parola
+    given-names: Pavan
+preferred-citation:
+  type: conference-paper
+  collection-title: 2025 IEEE International Conference on Smart Power, Energy, Renewables, and Transportation (SPERT)
+  location: Surat, India
+  year: 2025
+  publisher: IEEE
+  doi: 10.1109/SPERT67079.2025.11469727
+  url: https://ieeexplore.ieee.org/document/11469727
+repository-code: https://github.com/YaolaP4/Incremental_GNN_For_Combinatorial_Problems
+abstract: Dynamic channel reassignment with conflict-free allocation and minimal disruption. GraphSAGE+GAT with conflict-aware training achieves zero conflicts and 99.4% fewer changes than DSATUR on synthetic 100-1000 node graphs.

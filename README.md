@@ -1,53 +1,65 @@
-# Incremental GNN for Dynamic Graph Coloring
+# Incremental Graph Neural Networks for Dynamic Channel Assignment in HAN and NAN Deployments
 
-This repository contains the current implementation of the incremental GNN used for dynamic graph-coloring experiments.
+**Published at IEEE SPERT 2025** — 2025 IEEE International Conference on Smart Power, Energy, Renewables, and Transportation (Surat, India, Dec 22–24, 2025)
 
-## Current implementation
+📄 **Paper:** [IEEE Xplore](https://ieeexplore.ieee.org/document/11469727) | DOI: `10.1109/SPERT67079.2025.11469727` | Added to Xplore: April 14, 2026
 
-The evaluation and coloring pipeline now:
+> Conflict-free frequency allocation with minimal disruption during topology changes. On synthetic graphs (100–1000 nodes), the incremental GNN (GraphSAGE + GAT with conflict-aware training) achieves **zero interference conflicts** while reducing channel changes by **99.4% vs DSATUR (1.1 vs 185.1 avg changes per update)**.
 
-- checks every unique undirected edge when computing conflicts;
-- repairs residual conflicts and validates the final coloring before reporting results;
-- uses an actual simulated-annealing baseline with a cooling schedule and Metropolis acceptance;
-- evaluates on held-out synthetic graphs that are separate from the training set;
-- uses the stated 70% edge-addition / 30% edge-removal dynamic update mix;
-- lets every method maintain its own sequential coloring state;
-- aligns arbitrary color labels produced by fresh global recolorings before counting channel changes;
-- asserts that evaluated colorings are conflict-free instead of hard-coding a zero-conflict result.
+**Author:** Pavan Parola (UNC Chapel Hill)
 
-The random-geometric evaluation graphs are synthetic spatial proxies. They are not real HAN/NAN field deployments.
+## What this repo is
 
-## Run
+Reproducible implementation of the SPERT paper: dynamic graph coloring for Home / Neighborhood Area Networks (HANs/NANs) in smart-grid communications.
 
-Open `Incremental_GNN_Combinatorial_Optimization.ipynb` in Colab, Kaggle, or Jupyter and run it from top to bottom.
+- `DynamicGraphProcessor` for structural feature extraction
+- `ConflictAwareDynamicGNN`: 2× GraphSAGE + 2-head GAT + skip-connected color head
+- Conflict-aware training with adaptive penalty + greedy repair that *asserts* validity (no hard-coded zeros)
+- Baselines with their own sequential state: DSATUR, Welsh-Powell, Greedy Repair, Simulated Annealing (cooling + Metropolis)
+- Held-out evaluation (disjoint from training) with 70% edge-addition / 30% edge-removal updates, label-alignment so pure color permutations don't count as changes
 
-The notebook installs:
+Random-geometric graphs here are synthetic spatial proxies, not real HAN/NAN field deployments.
 
-```text
-torch
-torch_geometric
-networkx
-numpy
-scipy
-tqdm
+## Reproduce in 2 minutes
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YaolaP4/Incremental_GNN_For_Combinatorial_Problems/blob/main/Incremental_GNN_Combinatorial_Optimization.ipynb)
+
+```bash
+pip install -r requirements.txt
+# then open Incremental_GNN_Combinatorial_Optimization.ipynb and Run All
+# Training: 20 epochs static pre-training + 30 epochs incremental
+# Benchmark reports time_ms / conflicts / changes / colors for all 5 methods
 ```
 
-Training uses a two-phase schedule:
+Or pure Python:
 
-1. 20 epochs of static pre-training
-2. 30 epochs of incremental training
+```python
+from dynamic_gnn import *
+set_seed(42)
+# see notebook for full train + benchmark_suite() flow
+```
 
-The benchmark reports average computation time, conflicts, channel changes, and number of colors for:
-
-- GNN
-- DSATUR
-- Welsh-Powell
-- Greedy Repair
-- Local Search SA
-
-A small GitHub Actions smoke test runs on pushes to `main` and checks the real PyTorch Geometric forward/backward path, conflict repair, and an end-to-end benchmark update.
+CI: GitHub Actions `smoke-test.yml` checks PyG forward/backward, conflict repair, and an end-to-end 2-round benchmark on every push to `main`.
 
 ## Files
 
-- `dynamic_gnn.py` — model, training, conflict repair, baselines, graph generation, and evaluation
-- `Incremental_GNN_Combinatorial_Optimization.ipynb` — reproducible training/evaluation notebook
+- `dynamic_gnn.py` — model, training, repair, baselines, graph generation, evaluation
+- `Incremental_GNN_Combinatorial_Optimization.ipynb` — reproducible training + held-out benchmark
+- `requirements.txt` — pinned deps
+
+## Citation
+
+```bibtex
+@inproceedings{parola2025incrementalgnn,
+  title={Incremental Graph Neural Networks for Dynamic Channel Assignment in HAN and NAN Deployments},
+  author={Parola, Pavan},
+  booktitle={2025 IEEE International Conference on Smart Power, Energy, Renewables, and Transportation (SPERT)},
+  address={Surat, India},
+  year={2025},
+  publisher={IEEE},
+  doi={10.1109/SPERT67079.2025.11469727},
+  url={https://ieeexplore.ieee.org/document/11469727}
+}
+```
+
+Also see `CITATION.cff` for GitHub's Cite button.
