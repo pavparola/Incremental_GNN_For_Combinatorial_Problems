@@ -22,7 +22,7 @@ Random-geometric graphs here are synthetic spatial proxies, not real HAN/NAN fie
 
 ## Reproduce in 2 minutes
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YaolaP4/Incremental_GNN_For_Combinatorial_Problems/blob/main/Incremental_GNN_Combinatorial_Optimization.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pavparola/Incremental_GNN_For_Combinatorial_Problems/blob/main/Incremental_GNN_Combinatorial_Optimization.ipynb)
 
 ```bash
 pip install -r requirements.txt

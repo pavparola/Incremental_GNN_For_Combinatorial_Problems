@@ -11,5 +11,5 @@ preferred-citation:
   publisher: IEEE
   doi: 10.1109/SPERT67079.2025.11469727
   url: https://ieeexplore.ieee.org/document/11469727
-repository-code: https://github.com/YaolaP4/Incremental_GNN_For_Combinatorial_Problems
+repository-code: https://github.com/pavparola/Incremental_GNN_For_Combinatorial_Problems
 abstract: Dynamic channel reassignment with conflict-free allocation and minimal disruption. GraphSAGE+GAT with conflict-aware training achieves zero conflicts and 99.4% fewer changes than DSATUR on synthetic 100-1000 node graphs.
